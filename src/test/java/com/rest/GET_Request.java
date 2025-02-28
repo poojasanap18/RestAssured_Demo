@@ -5,6 +5,7 @@ import io.restassured.response.Response;
 
 import static io.restassured.RestAssured.*;
 import static io.restassured.matcher.RestAssuredMatchers.*;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
 
@@ -53,6 +54,20 @@ public class GET_Request {
                 .extract().response().path("data[0].first_name");
         System.out.println("Name : "+name);
 
+    }
+
+    @org.testng.annotations.Test
+    public void hamcrest_assertion(){
+        String name = given().baseUri("https://reqres.in/api/")
+                .queryParam("page","2")
+                .when()
+                .get("users/")
+                .then()
+                .log().all()
+                .statusCode(200)
+                .extract().response().path("data[0].first_name");
+
+        assertThat("First name matching..",name,equalTo("Michael"));
     }
 
 }
