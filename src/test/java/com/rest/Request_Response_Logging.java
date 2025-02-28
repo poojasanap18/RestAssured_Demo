@@ -1,8 +1,12 @@
 package com.rest;
 
+import io.restassured.config.LogConfig;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import org.testng.annotations.Test;
+
+import java.util.HashSet;
+import java.util.Set;
 
 import static io.restassured.RestAssured.*;
 import static io.restassured.matcher.RestAssuredMatchers.*;
@@ -71,5 +75,49 @@ public class Request_Response_Logging {
                 .log().everything()
                 .statusCode(200);
     }
+
+    @Test
+    public void request_response_logging5(){
+        given().baseUri("https://reqres.in/api/")
+                .queryParam("page","2")
+                .log().all()
+                .when()
+                .get("users/")
+                .then()
+                .log().ifValidationFails()
+                .statusCode(201);
+    }
+
+    @Test
+    public void request_response_logging6(){
+        given().baseUri("https://reqres.in/api/")
+                .queryParam("page","2")
+                .config(config.logConfig(LogConfig.logConfig().blacklistHeader("Accept")))
+                .log().all()
+                .when()
+                .get("users/")
+                .then()
+                .log().ifValidationFails()
+                .statusCode(200);
+    }
+
+    @Test
+    public void request_response_logging7(){
+        Set<String> headers = new HashSet<String>();
+        headers.add("Accept");
+
+        given().baseUri("https://reqres.in/api/")
+                .queryParam("page","2")
+                .header("Accept","*/*")
+                .config(config.logConfig(LogConfig.logConfig().blacklistHeader(headers.toString())))
+                .log().all()
+                .when()
+                .get("users/")
+                .then()
+                .log().ifValidationFails()
+                .statusCode(200);
+    }
+
+
 
 }
