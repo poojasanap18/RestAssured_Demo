@@ -2,6 +2,8 @@ package com.rest;
 
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
+import io.restassured.builder.ResponseBuilder;
+import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
@@ -16,14 +18,17 @@ import static org.hamcrest.Matchers.is;
 
 public class ResponseSpecImp {
 
-    ResponseSpecification responseSpecification;
+    ResponseSpecBuilder responseSpecBuilder;
     @BeforeClass
     public void setup(){
         RequestSpecBuilder requestSpecBuilder = new RequestSpecBuilder();
         requestSpecBuilder.setBaseUri("https://reqres.in/api/");
         requestSpecBuilder.addQueryParam("page","2");
         RestAssured.requestSpecification = requestSpecBuilder.build();
-        responseSpecification = RestAssured.expect().statusCode(200).contentType(ContentType.JSON);
+       // responseSpecification = RestAssured.expect().statusCode(200).contentType(ContentType.JSON);
+        ResponseSpecBuilder responseSpecBuilder1 = new ResponseSpecBuilder()
+                .expectStatusCode(200)
+                .expectContentType(ContentType.JSON);
     }
 
     @Test
@@ -32,6 +37,8 @@ public class ResponseSpecImp {
                 .get("users/")
                 .then().extract().response();
        // assertThat(response.statusCode(), is(equalTo(200)));
+
+
     }
 
 }
