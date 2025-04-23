@@ -64,7 +64,7 @@ public class POST_Request {
     public void Register_Post_call_negative_sceanrio1(){
         Map<String,String> payload = new HashMap<>();
         payload.put("email","eve.holt@reqres.in");
-        payload.put("password","pistolll");
+        payload.put("password","pistollll");
         given().
                 body(payload).
                 when().
