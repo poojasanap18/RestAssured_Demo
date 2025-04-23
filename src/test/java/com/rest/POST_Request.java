@@ -90,8 +90,8 @@ public class POST_Request {
 
     @Test
     public void test(){
-        System.out.println("test");
-
+        test();
+        System.out.println("testing message added");
     }
 
 
