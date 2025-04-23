@@ -46,4 +46,18 @@ public class POST_Request {
 
     }
 
+    @Test
+    public void Register_Post_call_negative_sceanrio(){
+        Map<String,String> payload = new HashMap<>();
+        payload.put("email","eve.holt@reqres.in");
+        payload.put("password","pistoll");
+        given().
+                body(payload).
+                when().
+                post("/register").
+                then().
+                statusCode(200);
+
+    }
+
 }
