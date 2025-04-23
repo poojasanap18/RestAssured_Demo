@@ -2,23 +2,16 @@ package com.rest;
 
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
-import io.restassured.builder.ResponseBuilder;
 import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
-import io.restassured.specification.RequestSpecification;
-import io.restassured.specification.ResponseSpecification;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.is;
 
 public class ResponseSpecImp {
 
-    ResponseSpecBuilder responseSpecBuilder;
     @BeforeClass
     public void setup(){
         RequestSpecBuilder requestSpecBuilder = new RequestSpecBuilder();
@@ -26,9 +19,10 @@ public class ResponseSpecImp {
         requestSpecBuilder.addQueryParam("page","2");
         RestAssured.requestSpecification = requestSpecBuilder.build();
        // responseSpecification = RestAssured.expect().statusCode(200).contentType(ContentType.JSON);
-        ResponseSpecBuilder responseSpecBuilder1 = new ResponseSpecBuilder()
+        ResponseSpecBuilder responseSpecBuilder = new ResponseSpecBuilder()
                 .expectStatusCode(200)
                 .expectContentType(ContentType.JSON);
+        RestAssured.responseSpecification= responseSpecBuilder.build();
     }
 
     @Test
