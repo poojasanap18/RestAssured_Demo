@@ -74,4 +74,18 @@ public class POST_Request {
 
     }
 
+    @Test
+    public void Register_Post_call_logall(){
+        Map<String,String> payload = new HashMap<>();
+        payload.put("email","eve.holt@reqres.in");
+        payload.put("password","pistol");
+        given().
+                body(payload).
+                when().
+                post("/register").
+                then().
+                statusCode(200).log().all();
+
+    }
+
 }
